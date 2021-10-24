@@ -21,9 +21,21 @@
   padding-top: 15vh;
 }
 
-.icon {
-  font-size: 4rem;
+li {
+    margin-bottom: 3rem;
 }
-.navItem {
+
+.icon {
+  font-size: 4.5rem;
   color: black;
+  cursor: pointer;
+}
+
+.icon:hover,
+.icon:active {
+  color: #e2f53a;
+}
+
+.active {
+  color: #f7bc1b;
 }

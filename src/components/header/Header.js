@@ -7,14 +7,40 @@ import SideBar from "../sideBar/SideBar";
 
 import classes from "./Header.module.css";
 
+const usersList = [
+  { name: "Mrrria", active: false },
+  { name: "ZanyGold", active: false },
+  { name: "YerMom", active: false },
+];
+
 const Header = (props) => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
-  const [clickedUser, setClickedUser] = useState(null);
+  const [clickedUsers, setClickedUsers] = useState(usersList);
 
   const openSideBar = (name) => {
     setSideBarOpen(true);
-    setClickedUser(name);
+
+    let tempList = [...clickedUsers];
+    for (let user of tempList) {
+      user.active = false;
+      if (user.name === name) {
+        user.active = true;
+      }
+    }
+    setClickedUsers(tempList);
   };
+
+  const displayedUsers = usersList.map((user) => (
+    <li
+      key={Math.random()}
+      onClick={() => {
+        openSideBar(user.name);
+      }}
+      className={!user.active ? classes.navItem : classes.active}
+    >
+      {user.name}
+    </li>
+  ));
 
   return (
     <Fragment>
@@ -24,37 +50,10 @@ const Header = (props) => {
         </div>
 
         <nav className={classes.nav}>
-          <ul>
-            <li
-              className={classes.navItem}
-              onClick={() => {
-                openSideBar("Mrrria");
-              }}
-            >
-              Mrrria
-            </li>
-            <li
-              className={classes.navItem}
-              onClick={() => {
-                openSideBar("ZanyGold");
-              }}
-            >
-              ZanyGold
-            </li>
-            <li
-              className={classes.navItem}
-              onClick={() => {
-                openSideBar("YerMom");
-              }}
-            >
-              YerMom
-            </li>
-
-        
-          </ul>
+          <ul>{displayedUsers}</ul>
         </nav>
       </header>
-      {sideBarOpen && <SideBar/>}
+      {sideBarOpen && <SideBar />}
     </Fragment>
   );
 };

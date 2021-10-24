@@ -1,0 +1,29 @@
+.sideBar {
+  position: relative;
+  height: 100vh;
+  width: 20vw;
+  background: brown;
+  animation: slide-in 300ms ease-out forwards;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(5rem);
+  }
+}
+
+.options {
+  padding-top: 15vh;
+}
+
+.icon {
+  font-size: 4rem;
+}
+.navItem {
+  color: black;
+}

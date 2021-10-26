@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { GiRelationshipBounds } from "react-icons/gi";
 
 import PushBasic from "../helperFunctions/pushFunctions/PushBasic";
@@ -9,18 +9,15 @@ const apiKeyAndLink =
   "https://api.nal.usda.gov/fdc/v1/foods/search?query=apple&pageSize=2&api_key=TqnHxl4qxraN1iIDy4fNLPLlgeCXBgEc8trqt3kg";
 
 const IngredientEntry = (props) => {
+  const [editButtonClicked, setEditButtonClicked] = useState(false);
+  const [editedVersion, setEditedVersion] = useState([]);
   const entryRef = useRef();
 
   const edit = () => {
-    console.log("editing");
-  };
+    const convertFraction = (fractionString) => {
+      return +(fractionString[0] / fractionString[2]);
+    };
 
-  const convertFraction = (fractionString) => {
-    return +(fractionString[0] / fractionString[2]);
-  };
-
-  const tally = async (event) => {
-    event.preventDefault();
     let fullPastedVersion = entryRef.current.value;
     let fullList = fullPastedVersion.split("\n");
 
@@ -48,20 +45,37 @@ const IngredientEntry = (props) => {
       }
 
       if (isNaN(editedLine[0]) && editedLine[0].length === 3) {
-          editedLine[0] = convertFraction(editedLine[0]);
+        editedLine[0] = convertFraction(editedLine[0]);
       }
+
+      setEditedVersion([...editedLine]);
 
       console.log(editedLine);
     }
+
+    setEditButtonClicked(true);
   };
 
-  const testing = 'hellner'
+  const submit = async (event) => {
+    event.preventDefault();
+    console.log("submitting");
+  };
 
   return (
     <Modal closeModal={props.closeModal}>
       <div className={`${classes.outerContainer} ${classes.control}`}>
         <form>
-          <textarea rows={15} cols={100} ref={entryRef} value={testing}></textarea>
+          {!editButtonClicked && (
+            <textarea rows={15} cols={100} ref={entryRef}></textarea>
+          )}
+          {editButtonClicked && (
+            <textarea
+              rows={15}
+              cols={100}
+              value={editedVersion}
+              readOnly={true}
+            ></textarea>
+          )}
 
           <div className={classes.buttonDiv}>
             <button
@@ -74,7 +88,7 @@ const IngredientEntry = (props) => {
           </div>
 
           <div className={classes.buttonDiv}>
-            <button onClick={tally} className={classes.submitButton}>
+            <button onClick={submit} className={classes.submitButton}>
               Submit
             </button>
           </div>

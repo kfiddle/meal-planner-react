@@ -1,7 +1,6 @@
 .outerContainer {
   width: 50%;
   display: flex;
-  flex-direction: column;
 }
 
 .backdrop {
@@ -17,8 +16,8 @@
 .modal {
   position: fixed;
   top: 10vh;
-  left: 5%;
-  width: 60%;
+  left: 30%;
+  width: 40%;
   background-color: white;
   padding: 2rem;
   border-radius: 14px;

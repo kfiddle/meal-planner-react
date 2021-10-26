@@ -11,60 +11,72 @@ const apiKeyAndLink =
 const IngredientEntry = (props) => {
   const entryRef = useRef();
 
+  const edit = () => {
+    console.log("editing");
+  };
+
+  const convertFraction = (fractionString) => {
+    return +(fractionString[0] / fractionString[2]);
+  };
+
   const tally = async (event) => {
     event.preventDefault();
-    // let fullPastedVersion = entryRef.current.value;
-    // let fullList = fullPastedVersion.split("\n");
+    let fullPastedVersion = entryRef.current.value;
+    let fullList = fullPastedVersion.split("\n");
 
-    // let exceptions = ['pound', 'pounds', 'cup', 'cups', 'tablespoon', 'tablespoons']
+    let exceptions = [
+      "pound",
+      "pounds",
+      "cup",
+      "cups",
+      "tablespoon",
+      "tablespoons",
+    ];
 
-    // const ruledOut = (word) => {
-    //     return exceptions.includes(word)
-    // }
+    const ruledOut = (word) => {
+      return exceptions.includes(word);
+    };
 
-    // for (let ingredientLine of fullList) {
-    //   let listOfWords = ingredientLine.split(" ");
+    for (let ingredientLine of fullList) {
+      let editedLine = [];
+      let listOfWords = ingredientLine.split(" ");
 
-    //   for (let word of listOfWords) {
-    //     if (isNaN(word) && !ruledOut(word) ) {
-    //       let response = await fetch(apiKeyAndLink, {
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify({ query: word }),
-    //       });
+      for (let word of listOfWords) {
+        if (!ruledOut(word)) {
+          editedLine.push(word);
+        }
+      }
 
-    //       if (response.ok) {
-    //         let reply = await response.json();
+      if (isNaN(editedLine[0]) && editedLine[0].length === 3) {
+          editedLine[0] = convertFraction(editedLine[0]);
+      }
 
-    //         if (reply.foods.length > 30) {
-    //           console.log(word);
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
-
-    let response = await fetch(apiKeyAndLink, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({"query": "Cheddar cheese", "dataType": ["Branded"], "sortBy": "fdcId", "sortOrder": "desc"}),
-    });
-
-    if (response.ok) {
-      console.log(response.json());
+      console.log(editedLine);
     }
   };
+
+  const testing = 'hellner'
+
   return (
     <Modal closeModal={props.closeModal}>
-      <div className={classes.outerContainer}>
+      <div className={`${classes.outerContainer} ${classes.control}`}>
         <form>
-          <textarea rows={15} cols={100} ref={entryRef}></textarea>
-          <div className={classes.submitDiv}>
-            <button onClick={tally}>Submit</button>
+          <textarea rows={15} cols={100} ref={entryRef} value={testing}></textarea>
+
+          <div className={classes.buttonDiv}>
+            <button
+              onClick={edit}
+              className={classes.editButton}
+              type={"button"}
+            >
+              Edit
+            </button>
+          </div>
+
+          <div className={classes.buttonDiv}>
+            <button onClick={tally} className={classes.submitButton}>
+              Submit
+            </button>
           </div>
         </form>
       </div>

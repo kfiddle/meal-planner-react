@@ -1,0 +1,72 @@
+.outerContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.control input,
+.control textarea {
+  font: inherit;
+  padding: 1rem;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  border: 1px solid #c1d1d1;
+  display: block;
+  width: 70%;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.control input:focus,
+.control textarea:focus {
+  background-color: #fdede3;
+  outline-color: rgb(14, 0, 10);
+}
+
+.buttonDiv {
+  margin-top: 2rem;
+}
+
+.editButton {
+  background: slategray;
+  color: black;
+  font-size: 1.5rem;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.editButton:hover {
+  background: black;
+  color: #e2f53a;
+}
+
+.submitButton {
+  background: brown;
+  color: #e2f53a;
+  font-size: 1.5rem;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.submitButton:hover {
+  background: #e2f53a;
+  color: brown;
+}
